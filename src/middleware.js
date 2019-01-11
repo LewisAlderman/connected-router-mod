@@ -6,12 +6,14 @@ import { CALL_HISTORY_METHOD } from './actions'
  * reducer or any middleware that comes after this one.
  */
 const routerMiddleware = (history) => store => next => action => { // eslint-disable-line no-unused-vars
-  if (action.type !== CALL_HISTORY_METHOD) {
+  if (action && action.type !== CALL_HISTORY_METHOD) {
     return next(action)
   }
-
-  const { payload: { method, args } } = action
-  history[method](...args)
+  
+  if (action) {
+    const { payload: { method, args } } = action
+    history[method](...args)
+  }
 }
 
 
